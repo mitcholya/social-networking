@@ -35,6 +35,9 @@ import { ROUTES } from './app.routes';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { HomeComponent } from './components/home/home.component';
+import { LoginErrorComponent } from './shared/modals/login/login.error.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MainComponent } from './components/main/main.component';
 
 
 // Application wide providers
@@ -53,7 +56,10 @@ type StoreType = {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LoginErrorComponent,
+    ProfileComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

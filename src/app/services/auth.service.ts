@@ -3,6 +3,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from "@angular/router";
 import * as firebase from 'firebase';
+import { LoginComponent } from '../components/login/login.component';
 
 
 @Injectable()
@@ -104,7 +105,10 @@ export class AuthService {
         this.updateUserData();
         this.onLogedIn(user);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        alert("Аккаунт с указанным email уже существует");
+      });
   }
 
   emailLogin(email:string, password:string) {
@@ -114,7 +118,10 @@ export class AuthService {
          this.updateUserData();
          this.onLogedIn(user);
        })
-       .catch(error => console.log(error));
+       .catch(error => {
+         console.log(error);
+         alert("Email или пароль указаны не верно");
+            });
   }
 
     public onLogedIn( res ){

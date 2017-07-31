@@ -21,3 +21,12 @@ a:active {
     text-decoration: none;
     color: #000000;
 }
+
+.signout {
+    margin-left: 10px;
+}
+
+.main-menu {
+    padding-top:25px;
+    list-style: none;
+}

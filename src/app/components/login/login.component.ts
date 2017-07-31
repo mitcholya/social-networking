@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
     public logInForm: FormGroup;
     public signUpForm: FormGroup;
-    // public authState: any = null;
+    public emailOrPasswordError: boolean = false;
 
   constructor(
         private formBuilder: FormBuilder,
@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authService: AuthService
   ) {
-        // this.afAuth.authState.subscribe((auth) => {
-        // this.authState = auth
-        //     });
+
    }
 
   public ngOnInit() {
@@ -71,10 +69,11 @@ export class LoginComponent implements OnInit {
 
     public signUp(){ 
        let data = this.signUpForm.getRawValue();
-       this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
-                       .then( this.initUserData.bind(this, data))
-                       .then( this.sendVeify.bind(this, data))
-                       .catch(console.error);
+    //    this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
+    //                    .then( this.initUserData.bind(this, data))
+    //                    .then( this.sendVeify.bind(this, data))
+    //                    .catch(console.error);
+        this.authService.emailSignUp(data.email, data.password);
        
        console.log('signup request', data);                
     }
@@ -99,63 +98,17 @@ export class LoginComponent implements OnInit {
 
     public logIn(  ){
         let data = this.logInForm.getRawValue();
-        console.log('login request', data);    
-        // this.afAuth.auth.signInWithEmailAndPassword(data.email, data.password)
-        //                 .then(this.onLogedIn.bind(this))
-        //                 .catch( console.error );
+        console.log('login request', data);
         this.authService.emailLogin(data.email, data.password);
     }
 
-    // public onLogedIn( res ){
-    //     console.log('user logged in', res );
-    //     this.router.navigate(['/']);
-    // }
-
     facebookLogin() {
-        // const provider = new firebase.auth.FacebookAuthProvider()
-        // return this.socialSignIn(provider);
         this.authService.facebookLogin();
     }
 
     googleLogin() {
-        // const provider = new firebase.auth.GoogleAuthProvider()
-        // return this.socialSignIn(provider);
         this.authService.googleLogin();
     }
 
-    // private socialSignIn(provider) {
-    //     return this.afAuth.auth.signInWithPopup(provider)
-    //   .then((credential) =>  {
-    //       this.authState = credential.user;
-    //       this.updateUserData();
-    //   })
-    //   .catch(error => console.log(error));
-    // }
-
-    // get authenticated(): boolean {
-    //     return this.authState !== null;
-    // }
-
-    // // Returns current user UID
-    // get currentUserId(): string {
-    //     return this.authenticated ? this.authState.uid : '';
-    // }
-
-    //   //// Helpers ////
-
-    // private updateUserData(): void {
-    // // Writes user name and email to realtime db
-    // // useful if your app displays information about users or for admin features
-
-    //     let path = `users/${this.currentUserId}`; // Endpoint on firebase
-    //     let data = {
-    //                 email: this.authState.email,
-    //                 name: this.authState.displayName
-    //                 }
-
-    //     this.db.object(path).update(data)
-    //     .catch(error => console.log(error));
-
-    // }
 
 }

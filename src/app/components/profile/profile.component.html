@@ -1,0 +1,53 @@
+<!-- <p>
+  profile works!
+</p> -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-8 col-md-offset-1 col-xs-offset-0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Мой профиль</div>
+                            <div class="panel-body">
+                                <form  [formGroup]="logInForm" (ngSubmit)="logIn($event)" novalidate>  
+                                    <div [ngClass]="{'form-group': true,  'no-mb': true,  'has-success': logInForm.controls.email.valid}">
+                                        <label>ФИО</label>
+                                        <div class="input-group">
+                                            <!-- <span class="input-group-addon" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                            </span> -->
+                                            <input formControlName="email" type="email" class="form-control" placeholder="ФИО" name="email" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div *ngIf="logInForm.controls.email.invalid && ( logInForm.controls.email.dirty || logInForm.controls.email.touched )">
+                                            <small *ngIf="logInForm.controls.email.errors.required" class="form-text text-danger">email la truong bat buoc nha.</small>
+                                            <small *ngIf="logInForm.controls.email.errors.email && !logInForm.controls.email.errors.required" class="form-text text-danger">dia chi email ko hop le roi.</small>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div [ngClass]="{'form-group': true,  'no-mb': true,  'has-success': logInForm.controls.password.valid}">
+                                        <label>Родной город</label>
+                                        <div class="input-group">
+                                            <!-- <span class="input-group-addon" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                            </span> -->
+                                            <input formControlName="password"  (change)="onPasswordChange" type="text" class="form-control" placeholder="Город" name="password" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div *ngIf="logInForm.controls.password.invalid && ( logInForm.controls.password.dirty || logInForm.controls.password.touched )">
+                                            <small *ngIf="logInForm.controls.password.errors.required" class="form-text text-danger">mat khau la truong bat buoc nha.</small>
+                                            <small *ngIf="logInForm.controls.password.errors.minlength && !logInForm.controls.password.errors.required" class="form-text text-danger">mat khau it nhat 6 ky tu.</small>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-footer centered">
+                                        <button type="submit" [disabled]="!logInForm.valid" class="btn btn-default">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </div>
+</div>
+
+
