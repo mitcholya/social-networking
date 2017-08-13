@@ -5,7 +5,7 @@ export const  firebaseProd = {
     authDomain: "social-networking-b41e4.firebaseapp.com",
     databaseURL: "https://social-networking-b41e4.firebaseio.com",
     projectId: "social-networking-b41e4",
-    storageBucket: "",
+    storageBucket: "social-networking-b41e4.appspot.com",
     messagingSenderId: "967723913601"
   }
 

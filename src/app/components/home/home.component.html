@@ -11,7 +11,7 @@
     <div class="col-md-4">
           <ul>
           <li class="list-inline">
-          <img src="http://i.imgur.com/GNdhDFK.png" class="img-circle size padding" alt="example"/>
+          <img [src]="avatar" class="img-circle size padding" alt="example"/>
           <a routerLink="/profile">{{userName}}</a>
           <button type="button" class="btn btn-default navbar-btn signout" (click)="SignOut()">Выйти</button>
         </li>

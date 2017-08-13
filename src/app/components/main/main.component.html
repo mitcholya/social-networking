@@ -1,7 +1,7 @@
 <!-- <p>
   main works!
 </p> -->
- <div style="text-align:center; padding-top: 120px;">
+ <!-- <div style="text-align:center; padding-top: 120px;">
   <h1>
     Welcome to New Social Networking!
   </h1>
@@ -18,4 +18,19 @@
   <li>
     <h2><a target="_blank" href="http://angularjs.blogspot.com/">Angular blog</a></h2>
   </li>
-</ul>  
+</ul>   -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="panel panel-default">
+        <img [src]="avatar" alt="avatar" class="img-responsive">
+      </div>  
+      </div>
+    <div class="col-md-7">
+      <h3>{{userName}}</h3>
+    </div>
+    <p>Город - {{ (userProfile | async)?.city }} </p>
+    <p>Номер телефона - {{ (userProfile | async)?.phone }}</p>
+  </div>  
+</div>

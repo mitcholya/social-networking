@@ -4,6 +4,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from "@angular/router";
 import * as firebase from 'firebase';
 import { LoginComponent } from '../components/login/login.component';
+import { LocalStorageService } from 'angular-2-local-storage';
+
+
 
 
 @Injectable()
@@ -13,7 +16,9 @@ export class AuthService {
 
   constructor(public afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
-              private router:Router) {
+              private router:Router,
+              private localStorageService: LocalStorageService,
+            ) {
 
             this.afAuth.authState.subscribe((auth) => {
               this.authState = auth
@@ -81,7 +86,10 @@ export class AuthService {
           this.updateUserData();
           this.onLogedIn(credential);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        alert("Аккаунт с указанным email уже существует");
+      });
   }
 
 
@@ -98,13 +106,15 @@ export class AuthService {
 
   //// Email/Password Auth ////
 
-  emailSignUp(email:string, password:string) {
+  emailSignUp(email: string, password: string, name: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
         this.authState = user;
-        this.updateUserData();
+        this.updateUserData(name);
+        this.sendVeify();
         this.onLogedIn(user);
       })
+      .then()
       .catch(error => {
         console.log(error);
         alert("Аккаунт с указанным email уже существует");
@@ -116,6 +126,7 @@ export class AuthService {
        .then((user) => {
          this.authState = user;
          this.updateUserData();
+        // this.saveToken({city: "Гай"}); 
          this.onLogedIn(user);
        })
        .catch(error => {
@@ -149,21 +160,42 @@ export class AuthService {
 
   //// Helpers ////
 
-  private updateUserData(): void {
+  public updateUserData(name: string = this.authState.displayName): void {
   // Writes user name and email to realtime db
   // useful if your app displays information about users or for admin features
-
+    // console.log(this.authState);
+    this.authState.updateProfile({
+      displayName: name
+    });
     let path = `users/${this.currentUserId}`; // Endpoint on firebase
     let data = {
                   email: this.authState.email,
-                  name: this.authState.displayName
-                }
+                  name: name
+                };
+
 
     this.db.object(path).update(data)
     .catch(error => console.log(error));
 
   }
 
+
+  public sendVeify(){
+        var user = this.afAuth.auth.currentUser;
+        
+        user.sendEmailVerification()
+            .then( this.onVerifySent.bind(this) )
+            .catch( console.error );
+
+    } 
+
+  public onVerifySent( res ){
+        console.log('verify email sent', res);
+    }
+
+  saveToken(user) {
+    this.localStorageService.set('USER_INFO', JSON.stringify(user));
+  }
 
 
 

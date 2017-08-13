@@ -38,6 +38,12 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginErrorComponent } from './shared/modals/login/login.error.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MainComponent } from './components/main/main.component';
+import { DataService } from './services/data.service';
+import { LocalStorageModule } from 'angular-2-local-storage';
+import { ImageCropper } from './components/image.cropper/image.cropper.component';
+import { ImageCropperComponent } from 'ng2-img-cropper';
+import { UploadFormComponent} from './components/upload/upload.component';
+import { UploadService } from './services/upload.service';
 
 
 // Application wide providers
@@ -59,7 +65,10 @@ type StoreType = {
     HomeComponent,
     LoginErrorComponent,
     ProfileComponent,
-    MainComponent
+    MainComponent,
+    ImageCropper,
+    ImageCropperComponent,
+    UploadFormComponent
   ],
   imports: [
     BrowserModule,
@@ -69,12 +78,15 @@ type StoreType = {
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    LocalStorageModule.withConfig({prefix: '_', storageType: 'localStorage'}), // localstorage setting
   ],
   providers: [
       APP_PROVIDERS,
       AuthService,
-      AuthGuardGuard
+      AuthGuardGuard,
+      DataService,
+      UploadService
   ],
   bootstrap: [AppComponent]
 })

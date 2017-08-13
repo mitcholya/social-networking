@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authService: AuthService
   ) {
-
+        
    }
 
   public ngOnInit() {
@@ -71,16 +71,23 @@ export class LoginComponent implements OnInit {
        let data = this.signUpForm.getRawValue();
     //    this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
     //                    .then( this.initUserData.bind(this, data))
+    //                    .then( this.initEmail.bind(this, data))
     //                    .then( this.sendVeify.bind(this, data))
     //                    .catch(console.error);
-        this.authService.emailSignUp(data.email, data.password);
+        this.authService.emailSignUp(data.email, data.password, data.name);
+        // this.initUserData(data);
        
        console.log('signup request', data);                
     }
 
     public initUserData( data ){
         let user = this.afAuth.auth.currentUser;
-        return user.updateProfile({ displayName: data.name, photoURL: user.photoURL});
+        return user.updateProfile({displayName: data.name, photoURL: user.photoURL});
+    }
+
+    public initEmail( data ){
+        let user = this.afAuth.auth.currentUser;
+        return user.updateEmail(data.email);
     }
 
     public sendVeify(){
@@ -108,6 +115,11 @@ export class LoginComponent implements OnInit {
 
     googleLogin() {
         this.authService.googleLogin();
+    }
+
+    public onLogedIn( res ){
+        console.log('user logged in', res );
+        this.router.navigate(['/']);
     }
 
 
